@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=@PROJECT_NAME@
+GenericName=@PROJECT_NAME@
+Comment=Application
+Icon=/usr/share/icons/@PROJECT_NAME@/@PROJECT_NAME@.png
+StartupNotify=true
+Exec=@PROJECT_NAME@
+Categories=GNOME;GTK;

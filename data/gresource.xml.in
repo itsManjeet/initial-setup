@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="@APPLICATION_PREFIX@">
+    <file preprocess="xml-stripblanks">ui/window.glade</file>
+    <file>icons/scalable/icon.svg</file>
+  </gresource>
+</gresources>
