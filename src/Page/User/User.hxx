@@ -28,7 +28,16 @@ private:
     Gtk::Entry *user_entry;
     Gtk::Entry *password_entry;
 
+    Gtk::CheckButton *superuser_password_check;
+    Gtk::CheckButton *autologin_check;
+
     void on_entry_changed();
+
+    void on_superuser_password_check();
+
+    void on_autologin_check();
+
+    void on_password_view(Gtk::EntryIconPosition, const GdkEventButton *);
 
 public:
     User(Page::BaseObjectType *object, const Glib::RefPtr<Gtk::Builder> &builder);

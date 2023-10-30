@@ -15,25 +15,11 @@
         <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkImage">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="margin-top">46</property>
-            <property name="margin-bottom">19</property>
-            <property name="pixel-size">125</property>
-            <property name="icon-name">start-here</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-        <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="label" translatable="yes">Welcome to rlxos</property>
+            <property name="margin-top">27</property>
+            <property name="label" translatable="yes">Welcome to the rlxos GNU/Linux </property>
             <attributes>
               <attribute name="weight" value="ultrabold"/>
               <attribute name="scale" value="1.3999999999999999"/>
@@ -42,24 +28,93 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">1</property>
+            <property name="position">0</property>
           </packing>
         </child>
         <child>
-          <object class="GtkLabel" id="welcome_message">
+          <object class="GtkLabel" id="message_label">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="label" translatable="yes">label</property>
+            <property name="margin-top">8</property>
+            <property name="label" translatable="yes">This program will ask you some question and set up rlxos GNU/Linux on your system</property>
+            <property name="justify">center</property>
+            <property name="wrap">True</property>
           </object>
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="margin-right">20</property>
+            <property name="margin-start">20</property>
+            <property name="margin-end">20</property>
+            <property name="margin-top">25</property>
+            <property name="margin-bottom">38</property>
+            <property name="stock">gtk-missing-image</property>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
             <property name="position">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButtonBox">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="margin-bottom">16</property>
+            <property name="layout-style">spread</property>
+            <child>
+              <object class="GtkLinkButton">
+                <property name="label">gtk-home</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="relief">none</property>
+                <property name="use-stock">True</property>
+                <property name="uri">https://rlxos.dev</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLinkButton">
+                <property name="label">gtk-help</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="relief">none</property>
+                <property name="use-stock">True</property>
+                <property name="always-show-image">True</property>
+                <property name="uri">http://docs.rlxos.dev</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="pack-type">end</property>
+            <property name="position">3</property>
           </packing>
         </child>
       </object>
       <packing>
         <property name="page-type">intro</property>
+        <property name="title" translatable="yes">Welcome</property>
+        <property name="sidebar-image">start-here</property>
         <property name="complete">True</property>
         <property name="has-padding">False</property>
       </packing>
@@ -73,7 +128,12 @@
           <object class="GtkLabel">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
+            <property name="margin-top">8</property>
             <property name="label" translatable="yes">Disk</property>
+            <attributes>
+              <attribute name="weight" value="semibold"/>
+              <attribute name="scale" value="1.2"/>
+            </attributes>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -85,6 +145,7 @@
           <object class="GtkLabel">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
+            <property name="margin-bottom">8</property>
             <property name="label" translatable="yes">Configuration System Partition</property>
           </object>
           <packing>
@@ -97,6 +158,10 @@
           <object class="GtkScrolledWindow">
             <property name="visible">True</property>
             <property name="can-focus">True</property>
+            <property name="margin-start">10</property>
+            <property name="margin-end">10</property>
+            <property name="margin-top">10</property>
+            <property name="margin-bottom">10</property>
             <property name="shadow-type">in</property>
             <child>
               <object class="GtkViewport">
@@ -121,8 +186,67 @@
             <property name="position">2</property>
           </packing>
         </child>
+        <child>
+          <object class="GtkButtonBox">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="margin-top">8</property>
+            <property name="margin-bottom">8</property>
+            <property name="layout-style">spread</property>
+            <child>
+              <object class="GtkButton" id="disk_refresh_button">
+                <property name="label">gtk-refresh</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="use-stock">True</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="disk_edit_button">
+                <property name="label">gtk-edit</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="use-stock">True</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLinkButton">
+                <property name="label">gtk-help</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="relief">none</property>
+                <property name="use-stock">True</property>
+                <property name="uri">http://docs.rlxos.dev/</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">3</property>
+          </packing>
+        </child>
       </object>
       <packing>
+        <property name="title" translatable="yes">Partition</property>
         <property name="has-padding">False</property>
       </packing>
     </child>
@@ -135,7 +259,7 @@
           <object class="GtkImage">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="margin-top">76</property>
+            <property name="margin-top">46</property>
             <property name="margin-bottom">24</property>
             <property name="pixel-size">128</property>
             <property name="icon-name">user</property>
@@ -147,7 +271,7 @@
           </packing>
         </child>
         <child>
-          <!-- n-columns=2 n-rows=2 -->
+          <!-- n-columns=2 n-rows=4 -->
           <object class="GtkGrid">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
@@ -209,12 +333,42 @@
                 <property name="can-focus">True</property>
                 <property name="visibility">False</property>
                 <property name="invisible-char">•</property>
-                <property name="secondary-icon-name">eye-open-negative-filled-symbolic</property>
+                <property name="secondary-icon-name">view-reveal-symbolic</property>
                 <property name="input-purpose">password</property>
               </object>
               <packing>
                 <property name="left-attach">1</property>
                 <property name="top-attach">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkCheckButton" id="user_superuser_password_check">
+                <property name="label" translatable="yes">Use same password for superuser</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">False</property>
+                <property name="margin-top">54</property>
+                <property name="active">True</property>
+                <property name="draw-indicator">True</property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">2</property>
+                <property name="width">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkCheckButton" id="user_autologin_check">
+                <property name="label" translatable="yes">Login without password</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">False</property>
+                <property name="draw-indicator">True</property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">3</property>
+                <property name="width">2</property>
               </packing>
             </child>
           </object>
@@ -226,6 +380,7 @@
         </child>
       </object>
       <packing>
+        <property name="title" translatable="yes">User</property>
         <property name="has-padding">False</property>
       </packing>
     </child>
@@ -292,6 +447,7 @@
       </object>
       <packing>
         <property name="page-type">confirm</property>
+        <property name="title" translatable="yes">Confirm</property>
         <property name="has-padding">False</property>
       </packing>
     </child>
@@ -346,6 +502,7 @@
       </object>
       <packing>
         <property name="page-type">progress</property>
+        <property name="title" translatable="yes">Progress</property>
         <property name="complete">True</property>
         <property name="has-padding">False</property>
       </packing>
@@ -380,7 +537,7 @@
             <property name="margin-top">35</property>
             <property name="margin-bottom">43</property>
             <property name="shadow-type">in</property>
-            <property name="min-content-width">40</property>
+            <property name="min-content-height">160</property>
             <child>
               <object class="GtkViewport">
                 <property name="visible">True</property>
@@ -423,6 +580,7 @@
       </object>
       <packing>
         <property name="page-type">summary</property>
+        <property name="title" translatable="yes">Summary</property>
         <property name="has-padding">False</property>
       </packing>
     </child>

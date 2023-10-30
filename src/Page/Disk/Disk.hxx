@@ -28,10 +28,15 @@
 class Disk : public Page {
 private:
     Gtk::TreeView *disk_list_view;
+    Gtk::Button *disk_edit_button, *disk_refresh_button;
     DiskColumn disks;
     Glib::RefPtr<Gtk::ListStore> ref_disk_model;
 protected:
     void on_treeview_row_activated(const Gtk::TreeModel::Path &path, Gtk::TreeViewColumn *column);
+
+    void on_disk_edit_button_clicked();
+
+    void on_disk_refresh_button_clicked();
 
 public:
     Disk(Page::BaseObjectType *object, const Glib::RefPtr<Gtk::Builder> &builder);

@@ -24,7 +24,7 @@
 
 class Welcome : public Page {
 private:
-    Gtk::Label *message;
+    Gtk::Label *message_label;
 public:
     Welcome(Page::BaseObjectType *object, const Glib::RefPtr<Gtk::Builder> &builder);
 

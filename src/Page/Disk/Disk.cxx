@@ -27,6 +27,8 @@
 Disk::Disk(Page::BaseObjectType *object, const Glib::RefPtr<Gtk::Builder> &builder)
         : Page(object) {
     builder->get_widget("disk_list_view", disk_list_view);
+    builder->get_widget("disk_refresh_button", disk_refresh_button);
+    builder->get_widget("disk_edit_button", disk_edit_button);
     ref_disk_model = Gtk::ListStore::create(disks);
 
     disk_list_view->set_model(ref_disk_model);
@@ -39,6 +41,10 @@ Disk::Disk(Page::BaseObjectType *object, const Glib::RefPtr<Gtk::Builder> &build
     disk_list_view->signal_row_activated()
             .connect(sigc::mem_fun(*this, &Disk::on_treeview_row_activated));
 
+    disk_refresh_button->signal_clicked()
+            .connect(sigc::mem_fun(*this, &Disk::on_disk_refresh_button_clicked));
+    disk_edit_button->signal_clicked()
+            .connect(sigc::mem_fun(*this, &Disk::on_disk_edit_button_clicked));
 }
 
 void Disk::prepare(Gtk::Window *base) {
@@ -93,4 +99,16 @@ void Disk::on_treeview_row_activated(const Gtk::TreeModel::Path &path, Gtk::Tree
         Application::global->partition = (Glib::ustring) row[disks.path];
         Application::global->window->set_page_complete(*this, true);
     }
+}
+
+void Disk::on_disk_edit_button_clicked() {
+    auto pid = fork();
+    if (pid == 0) {
+        execl("/usr/bin/gparted", "/usr/bin/gparted");
+        exit(0);
+    }
+}
+
+void Disk::on_disk_refresh_button_clicked() {
+    prepare(nullptr);
 }

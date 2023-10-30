@@ -37,6 +37,8 @@ public:
         Window *window;
         std::string username;
         std::string password;
+        bool update_root_password{true};
+        bool autologin{false};
 
 
         std::string partition;

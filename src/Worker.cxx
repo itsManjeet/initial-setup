@@ -52,6 +52,8 @@ void Worker::start(Window *caller) {
             case Application::Mode::InitialSetup: {
                 cmd << " ISE_USERNAME=" << Application::global->username;
                 cmd << " ISE_PASSWORD=" << Application::global->password;
+                cmd << " ISE_AUTOLOGIN=" << (Application::global->autologin ? "1" : "0");
+                cmd << " ISE_UPDATE_ROOT_PASSWORD=" << (Application::global->update_root_password ? "1" : "0");
                 cmd << " /usr/lib/initial-setup/first-boot.sh";
 
             }

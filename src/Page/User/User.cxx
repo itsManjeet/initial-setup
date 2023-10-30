@@ -26,13 +26,26 @@ User::User(Page::BaseObjectType *object, const Glib::RefPtr<Gtk::Builder> &build
         : Page(object) {
     builder->get_widget("user_entry", user_entry);
     builder->get_widget("password_entry", password_entry);
+    builder->get_widget("user_superuser_password_check", superuser_password_check);
+    builder->get_widget("user_autologin_check", autologin_check);
 
-    user_entry->signal_changed().connect(sigc::mem_fun(*this, &User::on_entry_changed));
-    password_entry->signal_changed().connect(sigc::mem_fun(*this, &User::on_entry_changed));
+    user_entry->signal_changed()
+            .connect(sigc::mem_fun(*this, &User::on_entry_changed));
+    password_entry->signal_changed()
+            .connect(sigc::mem_fun(*this, &User::on_entry_changed));
+
+    password_entry->signal_icon_press()
+            .connect(sigc::mem_fun(*this, &User::on_password_view));
+
+    superuser_password_check->signal_clicked()
+            .connect(sigc::mem_fun(*this, &User::on_superuser_password_check));
+    autologin_check->signal_clicked()
+            .connect(sigc::mem_fun(*this, &User::on_autologin_check));
 }
 
 void User::prepare(Gtk::Window *base) {
-
+    Application::global->autologin = autologin_check->get_active();
+    Application::global->update_root_password = superuser_password_check->get_active();
 }
 
 void User::on_entry_changed() {
@@ -57,4 +70,22 @@ void User::on_entry_changed() {
     }
 
 
+}
+
+void User::on_superuser_password_check() {
+    Application::global->update_root_password = superuser_password_check->get_active();
+}
+
+void User::on_autologin_check() {
+    Application::global->autologin = autologin_check->get_active();
+}
+
+void User::on_password_view(Gtk::EntryIconPosition, const GdkEventButton *event) {
+    if (password_entry->get_visibility()) {
+        password_entry->set_visibility(false);
+        password_entry->set_icon_from_icon_name("view-reveal-symbolic", Gtk::EntryIconPosition::ENTRY_ICON_SECONDARY);
+    } else {
+        password_entry->set_visibility(true);
+        password_entry->set_icon_from_icon_name("view-conceal-symbolic", Gtk::EntryIconPosition::ENTRY_ICON_SECONDARY);
+    }
 }

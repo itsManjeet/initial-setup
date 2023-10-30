@@ -21,18 +21,24 @@
 #include "../../Window.hxx"
 #include "../../Application.hxx"
 
+#define INITIAL_SETUP_USER_ID 69
+
 Welcome::Welcome(Page::BaseObjectType *object, const Glib::RefPtr<Gtk::Builder> &builder)
         : Page(object) {
-    builder->get_widget("welcome_message", message);
+    builder->get_widget("message_label", message_label);
 }
 
 void Welcome::prepare(Gtk::Window *base) {
-    switch (Application::global->mode) {
-        case Application::Mode::InitialSetup:
-            message->set_text("Follow the guide to complete the first boot setup");
-            break;
-        case Application::Mode::Installer:
-            message->set_text("Follow the guide to install rlxos onto your system");
-            break;
+    if (geteuid() != INITIAL_SETUP_USER_ID) {
+        Application::global->window->set_page_complete(*this, false);
+        message_label->set_label(
+                R"(You have already completed the Installation and
+initial setup process, If you need any help please
+reach out at our community groups and support email)");
+
+        // TODO: Less hacky way to hide sidebar
+        for (int i = 0; i < Application::global->window->get_n_pages(); i++) {
+            Application::global->window->set_page_title(*Application::global->window->get_nth_page(i), "");
+        }
     }
 }

@@ -58,6 +58,14 @@ void Confirm::prepare(Gtk::Window *base) {
             row = *(ref_tree_model->append());
             row[config.name] = "User Name";
             row[config.value] = Application::global->username;
+
+            row = *(ref_tree_model->append());
+            row[config.name] = "Auto Login";
+            row[config.value] = Application::global->autologin ? "true" : "false";
+
+            row = *(ref_tree_model->append());
+            row[config.name] = "Update Root password";
+            row[config.value] = Application::global->update_root_password ? "true" : "false";
         }
             break;
     }
