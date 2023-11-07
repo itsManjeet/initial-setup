@@ -49,6 +49,6 @@ void Summary::on_finished() {
     if (Application::global->mode == Application::Mode::Installer) {
         system("reboot");
     } else {
-        system("xfce4-session-logout");
+        system("xfce4-session-logout --logout");
     }
 }

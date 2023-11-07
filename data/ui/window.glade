@@ -8,6 +8,7 @@
     <property name="default-width">856</property>
     <property name="default-height">575</property>
     <property name="icon-name">start-here</property>
+    <property name="skip-taskbar-hint">True</property>
     <property name="deletable">False</property>
     <child>
       <object class="GtkBox" id="welcome_page">
@@ -15,10 +16,28 @@
         <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
         <child>
+          <object class="GtkImage">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="margin-left">20</property>
+            <property name="margin-right">20</property>
+            <property name="margin-start">20</property>
+            <property name="margin-end">20</property>
+            <property name="margin-top">25</property>
+            <property name="margin-bottom">12</property>
+            <property name="pixel-size">128</property>
+            <property name="icon-name">rlxos-logo</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="margin-top">27</property>
             <property name="label" translatable="yes">Welcome to the rlxos GNU/Linux </property>
             <attributes>
               <attribute name="weight" value="ultrabold"/>
@@ -28,7 +47,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">0</property>
+            <property name="position">1</property>
           </packing>
         </child>
         <child>
@@ -43,23 +62,6 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">1</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkImage">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="margin-right">20</property>
-            <property name="margin-start">20</property>
-            <property name="margin-end">20</property>
-            <property name="margin-top">25</property>
-            <property name="margin-bottom">38</property>
-            <property name="resource">/dev/rlxos/InitialSetup/banner.jpg</property>
-          </object>
-          <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
             <property name="position">2</property>
           </packing>
         </child>
@@ -67,6 +69,7 @@
           <object class="GtkButtonBox">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
+            <property name="margin-top">60</property>
             <property name="margin-bottom">16</property>
             <property name="layout-style">spread</property>
             <child>

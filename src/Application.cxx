@@ -55,7 +55,7 @@ void Application::on_activate() {
         std::ifstream cmdline("/proc/cmdline");
         if (cmdline.good()) {
             for (std::string line; cmdline >> line;) {
-                if (line == "live") {
+                if (line == "rd.live=1") {
                     global->mode = Mode::Installer;
                     break;
                 }
