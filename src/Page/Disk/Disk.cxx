@@ -71,7 +71,9 @@ void Disk::prepare(Gtk::Window *base) {
     for (auto const &block: data["blockdevices"]) {
         if (block.contains("children")) {
             for (auto const &child: block["children"]) {
-                if (Application::global->is_efi && Application::global->efi_partition.empty()) {
+                if (Application::global->is_efi                 && 
+                    Application::global->efi_partition.empty()  &&
+                    !child["rm"].get<bool>()) {
                     if (child["parttype"] == "c12a7328-f81f-11d2-ba4b-00a0c93ec93b") {
                         Application::global->efi_partition = child["path"].get<std::string>();
                     }

@@ -11,5 +11,5 @@ configure_file(icons/scalable/icon.svg ${ICON_FILE} COPYONLY)
 #compile_schemas(${GSCHEMA_FILE})
 
 install(FILES ${GSCHEMA_FILE} DESTINATION /usr/share/glib-2.0/schemas)
-install(FILES ${DESKTOP_FILE} DESTINATION /usr/share/applications)
-install(FILES ${ICON_FILE} DESTINATION /usr/share/icons/${PROJECT_NAME})
+# install(FILES ${DESKTOP_FILE} DESTINATION /usr/share/applications)
+# install(FILES ${ICON_FILE} DESTINATION /usr/share/icons/${PROJECT_NAME})

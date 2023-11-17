@@ -51,6 +51,9 @@ void Application::on_activate() {
         auto window = create_window();
         global->mode = Mode::InitialSetup;
         global->window = window;
+        if (getenv("INITIAL_SETUP_EFI")) {
+            global->efi_partition = getenv("INITIAL_SETUP_EFI");
+        }
 
         std::ifstream cmdline("/proc/cmdline");
         if (cmdline.good()) {
