@@ -29,6 +29,7 @@ public:
     enum class Mode {
         Installer,
         InitialSetup,
+        Testing,
     };
 
     struct Configuration {

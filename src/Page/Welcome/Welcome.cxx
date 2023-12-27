@@ -29,7 +29,7 @@ Welcome::Welcome(Page::BaseObjectType *object, const Glib::RefPtr<Gtk::Builder> 
 }
 
 void Welcome::prepare(Gtk::Window *base) {
-    if (geteuid() != INITIAL_SETUP_USER_ID) {
+    if (geteuid() != INITIAL_SETUP_USER_ID && Application::global->mode != Application::Mode::Testing) {
         Application::global->window->set_page_complete(*this, false);
         message_label->set_label(
                 R"(You have already completed the Installation and

@@ -21,6 +21,10 @@
 #include "Window.hxx"
 #include "Application.hxx"
 
+#include <fcntl.h>
+#include <iostream>
+#include <sys/wait.h>
+
 Worker::Worker()
         : mutex_(),
           has_stopped_{false},
@@ -37,7 +41,6 @@ void Worker::start(Window *caller) {
         message_ = "";
 
         std::stringstream cmd;
-        cmd << "env ";
         switch (Application::global->mode) {
             case Application::Mode::Installer: {
                 cmd << " ISE_ROOT=" << Application::global->partition;
@@ -58,6 +61,11 @@ void Worker::start(Window *caller) {
 
             }
                 break;
+            
+            // case Application::Mode::Testing: {
+            //     cmd << "for i in 1 2 3 4 5 6 7 9 10 ; do echo PROCESS ${i}; sleep 1; done; sleep 5; exit 1";
+            // }
+            //     break;
         }
 
         cmd << " 2>&1";
@@ -71,6 +79,10 @@ void Worker::start(Window *caller) {
             caller->notify();
             return;
         }
+        completed = false;
+        fd_ = fileno(pipe_);
+        fds[0].fd = fd_;
+        fds[0].events = POLLIN | POLLHUP | POLLERR;
     }
 
     while (true) {
@@ -78,24 +90,62 @@ void Worker::start(Window *caller) {
         {
             std::lock_guard<std::mutex> lock(mutex_);
             std::array<char, 128> buffer{};
-            if (fgets(buffer.data(), buffer.size(), pipe_) == nullptr) {
+            auto result = poll(fds, 1, 0);
+            std::cout << "POLL: " << result << std::endl;
+            switch (result) {
+                case -1:
+                    std::cout << "ERROR: select(failed)" << strerror(errno) << std::endl;
+                    completed = true;
+                    Application::global->failed = true;
+                    break;
+
+                case 0: {
+                    int status;
+                    auto pid = waitpid(-1, &status, WNOHANG);
+                    if (pid == -1 || WIFEXITED(status)) {
+                        completed = true;
+                        Application::global->failed = WEXITSTATUS(status) != 0;
+                    }
+                }
+                    break;
+                
+                default: {
+                    if (fds[0].revents & POLLIN) {
+                        if (fgets(buffer.data(), buffer.size(), pipe_) == nullptr) {
+                            std::cout << "ERROR: failed to read data " << strerror(errno) << std::endl;
+                            completed = true;
+                            Application::global->failed = true;
+                            break;
+                        } else {
+                            std::cout << "READING DATA" << std::endl;
+                            message_.append(buffer.data());
+                        }
+                    } else if (fds[0].revents & POLLERR) {
+                        completed = true;
+                        Application::global->failed = true;
+                        Application::global->error_message = message_ + "\npoll(error) " + std::string(strerror(errno));
+                    } else if (fds[0].revents & POLLHUP) {
+                        completed = true;
+                    } else {
+                        std::cout << "REVENT: " << fds[0].revents << std::endl;
+                    }
+                }
+            }
+            if (completed || Application::global->failed) {
+                std::cout << "COMPLETED" << std::endl;
                 break;
             }
-            message_.append(buffer.data());
         }
         caller->notify();
     }
 
     {
         std::lock_guard<std::mutex> lock(mutex_);
-        if (int status = WEXITSTATUS(pclose(pipe_)); status != 0) {
-            Application::global->error_message
-                    = message_ +
-                      ":: Failed with error code " + std::to_string(status) +
-                      "\n";
+        int status = WEXITSTATUS(pclose(pipe_));
+        if (status != 0) {
             Application::global->failed = true;
+            Application::global->error_message = message_ + "\nExit With " + std::to_string(status);
         }
-
         has_stopped_ = true;
         progress_ = 1.0;
     }

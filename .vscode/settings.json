@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.bst": "yaml",
+        "*.src": "common lisp",
+        "array": "cpp"
+    }
+}

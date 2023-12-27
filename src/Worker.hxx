@@ -23,13 +23,16 @@
 #include <gtkmm.h>
 #include <thread>
 #include <mutex>
-
+#include <poll.h>
 class Window;
 
 class Worker {
 private:
     mutable std::mutex mutex_;
     FILE *pipe_;
+    int fd_;
+    bool completed{false};
+    pollfd fds[1];
     bool has_stopped_;
     double progress_;
     Glib::ustring message_;

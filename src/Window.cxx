@@ -55,6 +55,7 @@ Window::Window(Gtk::Assistant::BaseObjectType *object, const Glib::RefPtr<Gtk::B
 }
 
 void Window::on_apply() {
+    this->commit();
     if (worker_thread_) {
         progress_bar->set_text("can't start a worker thread, already started");
         progress_bar->set_fraction(1.0);

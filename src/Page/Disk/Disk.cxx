@@ -54,6 +54,21 @@ void Disk::prepare(Gtk::Window *base) {
     Application::global->window->set_page_complete(*this, false);
     Application::global->is_efi = std::filesystem::exists("/sys/firmware/efi");
 
+    // if (Application::global->mode == Application::Mode::Testing) {
+    //     auto row = *(ref_disk_model->append());
+    //     row[disks.path] = "/dev/sda1";
+    //     row[disks.size] = "10G";
+    //     row[disks.type] = "ext4";
+    //     row[disks.name] = "RLXOS";
+
+    //     row = *(ref_disk_model->append());
+    //     row[disks.path] = "/dev/sda2";
+    //     row[disks.size] = "100G";
+    //     row[disks.type] = "btrfs";
+
+    //     return;
+    // }
+
     auto [status, output] = Exec("lsblk", {"-J", "-O"}).output();
     if (status != 0) {
         std::cerr << "ERROR: " << output << std::endl;
