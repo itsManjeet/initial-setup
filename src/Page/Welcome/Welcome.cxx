@@ -21,7 +21,7 @@
 #include "../../Window.hxx"
 #include "../../Application.hxx"
 
-#define INITIAL_SETUP_USER_ID 69
+#define INITIAL_SETUP_USER_ID 82
 
 Welcome::Welcome(Page::BaseObjectType *object, const Glib::RefPtr<Gtk::Builder> &builder)
         : Page(object) {
