@@ -8,22 +8,26 @@ add_executable(${PROJECT_NAME}
         ${GENERATED_DATA_DIR}/resources.c
         Page/Page.cxx
         Page/Page.hxx
+        Worker.cxx
+        Worker.hxx
+        Exec/Exec.cxx
+        Exec/Exec.hxx
         Page/Welcome/Welcome.cxx
         Page/Welcome/Welcome.hxx
+        Page/Method/Method.cxx
+        Page/Method/Method.hxx
         Page/Disk/Disk.cxx
         Page/Disk/Disk.hxx
         Page/Disk/DiskColumn.cxx
         Page/Disk/DiskColumn.hxx
-        Exec/Exec.cxx
-        Exec/Exec.hxx
         Page/Confirm/Confirm.cxx
         Page/Confirm/Confirm.hxx
         Page/Confirm/ConfigColumn.cxx
         Page/Confirm/ConfigColumn.hxx
-        Worker.cxx
-        Worker.hxx
         Page/User/User.cxx
         Page/User/User.hxx
+        Page/Timezone/Timezone.cxx
+        Page/Timezone/Timezone.hxx
         Page/Summary/Summary.cxx
         Page/Summary/Summary.hxx)
 target_link_libraries(${PROJECT_NAME}

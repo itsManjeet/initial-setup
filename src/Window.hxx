@@ -22,16 +22,20 @@
 
 #include <gtkmm.h>
 #include "Page/Welcome/Welcome.hxx"
+#include "Page/Method/Method.hxx"
 #include "Page/Disk/Disk.hxx"
 #include "Page/Confirm/Confirm.hxx"
 #include "Page/User/User.hxx"
+#include "Page/Timezone/Timezone.hxx"
 #include "Page/Summary/Summary.hxx"
 #include "Worker.hxx"
 
 class Window : public Gtk::Assistant {
 private:
     Welcome *welcome_page;
+    Method* method_page;
     User *user_page;
+    Timezone *timezone_page;
     Disk *disk_page;
     Summary *summary_page;
 

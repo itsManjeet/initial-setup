@@ -41,9 +41,11 @@ Window::Window(Gtk::Assistant::BaseObjectType *object, const Glib::RefPtr<Gtk::B
           worker_(),
           worker_thread_{nullptr} {
     builder->get_widget_derived("welcome_page", welcome_page);
+    builder->get_widget_derived("method_page", method_page);
     builder->get_widget_derived("disk_page", disk_page);
     builder->get_widget_derived("confirm_page", confirm_page);
     builder->get_widget_derived("user_page", user_page);
+    builder->get_widget_derived("timezone_page", timezone_page);
     builder->get_widget_derived("summary_page", summary_page);
     builder->get_widget("progress_bar", progress_bar);
     builder->get_widget("progress_view", progress_view);

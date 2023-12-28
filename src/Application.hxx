@@ -31,18 +31,31 @@ public:
         InitialSetup,
         Testing,
     };
+    
+    enum {
+        WELCOME_PAGE = 0,
+        METHOD_PAGE,
+        DISK_PAGE,
+        USER_PAGE,
+        TIMEZONE_PAGE,
+        CONFIRM_PAGE,
+        PROGRESS_PAGE,
+        SUMMARY_PAGE,
+    };
 
     struct Configuration {
         bool is_efi;
+        bool clean_install{false};
         Mode mode;
         Window *window;
         std::string username;
         std::string password;
+        std::string timezone;
         bool update_root_password{true};
         bool autologin{false};
 
 
-        std::string partition;
+        std::string partition, drive, boot_drive;
         std::string efi_partition;
 
         bool failed;

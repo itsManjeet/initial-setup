@@ -4,5 +4,6 @@
     <file preprocess="xml-stripblanks">ui/window.glade</file>
     <file>icons/scalable/icon.svg</file>
     <file>banner.png</file>
+    <file>world.png</file>
   </gresource>
 </gresources>

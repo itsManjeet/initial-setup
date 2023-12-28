@@ -67,11 +67,13 @@ void Application::on_activate() {
 
         switch (global->mode) {
             case Mode::Installer:
-                window->get_nth_page(2)->hide();
+                window->get_nth_page(USER_PAGE)->hide();
+                window->get_nth_page(TIMEZONE_PAGE)->hide();
                 break;
             case Mode::InitialSetup:
                 // Hide installer Page
-                window->get_nth_page(1)->hide();
+                window->get_nth_page(METHOD_PAGE)->hide();
+                window->get_nth_page(DISK_PAGE)->hide();
                 break;
         }
         cmdline.close();

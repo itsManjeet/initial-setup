@@ -44,14 +44,35 @@ void Confirm::prepare(Gtk::Window *base) {
     row[config.value] = Application::global->mode == Application::Mode::Installer ? "Installer" : "First Boot";
 
     switch (Application::global->mode) {
+        case Application::Mode::Testing:
         case Application::Mode::Installer: {
             row = *(ref_tree_model->append());
-            row[config.name] = "Root Device";
-            row[config.value] = Application::global->partition;
+            row[config.name] = "Installation Method";
+            row[config.value] = Application::global->clean_install ? "Clean Install" : "Manual Partitioning";
 
             row = *(ref_tree_model->append());
-            row[config.name] = "EFI Partition";
-            row[config.value] = Application::global->is_efi ? Application::global->efi_partition : "Not Supported";
+            row[config.name] = "System Type";
+            row[config.value] = Application::global->is_efi ? "UEFI" : "Boot Legacy";
+
+            if (Application::global->is_efi) {
+                row = *(ref_tree_model->append());
+                row[config.name] = "EFI Partition";
+                row[config.value] = Application::global->efi_partition;
+            } else {
+                row = *(ref_tree_model->append());
+                row[config.name] = "BootLoader Device";
+                row[config.value] = Application::global->boot_drive;
+            }
+
+            if (Application::global->clean_install) {
+                row = *(ref_tree_model->append());
+                row[config.name] = "Storage Drive";
+                row[config.value] = Application::global->drive;
+            } else {
+                row = *(ref_tree_model->append());
+                row[config.name] = "Root Partition";
+                row[config.value] = Application::global->partition;
+            }
         }
             break;
         case Application::Mode::InitialSetup: {
