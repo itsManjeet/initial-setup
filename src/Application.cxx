@@ -51,7 +51,7 @@ Window *Application::create_window() {
 void Application::on_activate() {
     try {
         auto window = create_window();
-        global->mode = Mode::Testing;
+        global->mode = Mode::InitialSetup;
         global->window = window;
         if (getenv("INITIAL_SETUP_EFI")) {
             global->efi_partition = getenv("INITIAL_SETUP_EFI");
