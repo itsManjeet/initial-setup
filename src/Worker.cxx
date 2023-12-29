@@ -89,6 +89,9 @@ void Worker::start(Window *caller) {
         }
         completed = false;
         fd_ = fileno(pipe_);
+        int flags = fcntl(fd_, F_GETFL, 0);
+        fcntl(fd_, F_SETFL, flags | O_NONBLOCK);
+        
         fds[0].fd = fd_;
         fds[0].events = POLLIN | POLLHUP | POLLERR;
     }
