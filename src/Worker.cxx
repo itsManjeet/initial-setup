@@ -121,9 +121,6 @@ void Worker::start(Window *caller) {
                     if (fds[0].revents & POLLIN) {
                         if (fgets(buffer.data(), buffer.size(), pipe_) == nullptr) {
                             std::cout << "ERROR: failed to read data " << strerror(errno) << std::endl;
-                            completed = true;
-                            Application::global->failed = true;
-                            break;
                         } else {
                             std::cout << "READING DATA" << std::endl;
                             message_.append(buffer.data());
