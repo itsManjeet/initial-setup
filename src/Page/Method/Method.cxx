@@ -63,7 +63,9 @@ void Method::prepare(Gtk::Window *base) {
     );
     
     reload_partitions();
-    Application::global->window->set_page_complete(*this, false);
+    
+    clean_install_radio->set_active(true);
+    on_clean_install();
 }
 
 
@@ -146,6 +148,7 @@ void Method::reload_partitions() {
       for (auto const &block: block_devices["blockdevices"]) {
         if (block.contains("children")) {
             for (auto const& child : block["children"]) {
+                std::cout << "ADDED " << child["path"].get<std::string>() << std::endl;
                 selected_partiton_combo->append(child["path"].get<std::string>());
             }
         }

@@ -81,6 +81,10 @@ void Confirm::prepare(Gtk::Window *base) {
             row[config.value] = Application::global->username;
 
             row = *(ref_tree_model->append());
+            row[config.name] = "Timezone";
+            row[config.value] = Application::global->timezone;
+
+            row = *(ref_tree_model->append());
             row[config.name] = "Auto Login";
             row[config.value] = Application::global->autologin ? "true" : "false";
 

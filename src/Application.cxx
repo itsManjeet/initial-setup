@@ -39,17 +39,19 @@ Glib::RefPtr<Application> Application::create() {
 }
 
 Window *Application::create_window() {
-    auto window = Window::create();
-    add_window(*window);
-
+    if (get_windows().empty()) {
+        auto window = Window::create();
+        add_window(*window);
+    }
+    auto window = get_windows().front();
     window->signal_hide().connect(sigc::bind(sigc::mem_fun(*this, &Application::on_hide_window), window));
-    return window;
+    return static_cast<Window*>(window);
 }
 
 void Application::on_activate() {
     try {
         auto window = create_window();
-        global->mode = Mode::InitialSetup;
+        global->mode = Mode::Testing;
         global->window = window;
         if (getenv("INITIAL_SETUP_EFI")) {
             global->efi_partition = getenv("INITIAL_SETUP_EFI");
@@ -90,5 +92,5 @@ void Application::on_startup() {
 }
 
 void Application::on_hide_window(Gtk::Window *window) {
-    delete window;
+    window->hide();
 }

@@ -70,12 +70,12 @@ void Window::on_apply() {
 
 void Window::on_cancel() {
     std::cout << "cancelling" << std::endl;
-    this->get_application()->quit();
+    this->hide();
 }
 
 void Window::on_close() {
     std::cout << "quiting" << std::endl;
-    this->get_application()->quit();
+    this->hide();
 }
 
 
