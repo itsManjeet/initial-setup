@@ -124,6 +124,7 @@ void Method::updated_block_devices() {
 void Method::reload_partitions() {
     storage_device_combo->remove_all();
     boot_disk_combo->remove_all();
+    selected_partiton_combo->remove_all();
     updated_block_devices();
     
     for (auto const &block: block_devices["blockdevices"]) {
@@ -145,7 +146,7 @@ void Method::reload_partitions() {
         }
     }
 
-      for (auto const &block: block_devices["blockdevices"]) {
+    for (auto const &block: block_devices["blockdevices"]) {
         if (block.contains("children")) {
             for (auto const& child : block["children"]) {
                 std::cout << "ADDED " << child["path"].get<std::string>() << std::endl;
@@ -159,6 +160,9 @@ void Method::reload_partitions() {
 
     if (!storage_device_combo->get_cells().empty())
         storage_device_combo->set_active(0);
+
+    if (!selected_partiton_combo->get_cells().empty())
+        selected_partiton_combo->set_active(0);
 }
 
 void Method::on_selected_partition_combo_changed() {
