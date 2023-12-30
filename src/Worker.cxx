@@ -71,7 +71,7 @@ void Worker::start(Window *caller) {
                 break;
             
             case Application::Mode::Testing: {
-                cmd << "for i in 1 2 3 4 5 6 7 9 10 ; do echo PROCESS ${i}; sleep 1; done; sleep 5; exit 1";
+                cmd << "for i in 1 2 3 4 5 6 7 9 10 ; do echo :: PROCESS ${i}; sleep 1; done; sleep 5;";
             }
                 break;
         }
@@ -87,13 +87,6 @@ void Worker::start(Window *caller) {
             caller->notify();
             return;
         }
-        completed = false;
-        fd_ = fileno(pipe_);
-        int flags = fcntl(fd_, F_GETFL, 0);
-        fcntl(fd_, F_SETFL, flags | O_NONBLOCK);
-        
-        fds[0].fd = fd_;
-        fds[0].events = POLLIN | POLLHUP | POLLERR;
     }
 
     while (true) {
@@ -101,48 +94,10 @@ void Worker::start(Window *caller) {
         {
             std::lock_guard<std::mutex> lock(mutex_);
             std::array<char, 128> buffer{};
-            auto result = poll(fds, 1, 0);
-            std::cout << "POLL: " << result << std::endl;
-            switch (result) {
-                case -1:
-                    std::cout << "ERROR: select(failed)" << strerror(errno) << std::endl;
-                    completed = true;
-                    Application::global->failed = true;
-                    break;
-
-                case 0: {
-                    int status;
-                    auto pid = waitpid(-1, &status, WNOHANG);
-                    if (pid == -1 || WIFEXITED(status)) {
-                        completed = true;
-                        Application::global->failed = WEXITSTATUS(status) != 0;
-                    }
-                }
-                    break;
-                
-                default: {
-                    if (fds[0].revents & POLLIN) {
-                        if (fgets(buffer.data(), buffer.size(), pipe_) == nullptr) {
-                            std::cout << "ERROR: failed to read data " << strerror(errno) << std::endl;
-                        } else {
-                            std::cout << "READING DATA" << std::endl;
-                            message_.append(buffer.data());
-                        }
-                    } else if (fds[0].revents & POLLERR) {
-                        completed = true;
-                        Application::global->failed = true;
-                        Application::global->error_message = message_ + "\npoll(error) " + std::string(strerror(errno));
-                    } else if (fds[0].revents & POLLHUP) {
-                        completed = true;
-                    } else {
-                        std::cout << "REVENT: " << fds[0].revents << std::endl;
-                    }
-                }
-            }
-            if (completed || Application::global->failed) {
-                std::cout << "COMPLETED" << std::endl;
+            if (fgets(buffer.data(), buffer.size(), pipe_) == nullptr) {
                 break;
             }
+            message_.append(buffer.data());
         }
         caller->notify();
     }

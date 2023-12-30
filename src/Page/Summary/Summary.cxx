@@ -24,31 +24,24 @@
 Summary::Summary(Page::BaseObjectType *object, const Glib::RefPtr<Gtk::Builder> &builder)
         : Page(object) {
     builder->get_widget("summary_view", summary_view);
-    builder->get_widget("finish_button", finish_button);
+    builder->get_widget("summary_scroll", summary_scroll);
 
-    finish_button->signal_clicked().connect(sigc::mem_fun(*this, &Summary::on_finished));
+    builder->get_widget("summary_status", status_label);
+    builder->get_widget("summary_icon", status_icon);
+
 }
 
 void Summary::prepare(Gtk::Window *base) {
-    std::string message;
     if (Application::global->failed) {
-        message = "FAILED: " + Application::global->error_message;
+        status_icon->set_from_icon_name("gtk-cancel", Gtk::ICON_SIZE_DIALOG);
+        status_label->set_text("Installation Failed");
+        summary_view->get_buffer()->set_text(Application::global->error_message);
     } else {
-        message = "Success";
+        status_icon->set_from_icon_name("gtk-apply", Gtk::ICON_SIZE_DIALOG);
+        status_label->set_text("Success");
+        status_label->set_vexpand();
+        summary_scroll->hide();
     }
 
-    summary_view->get_buffer()->set_text(message);
-    finish_button->set_label(
-            Application::global->mode == Application::Mode::Installer
-            ? "Reboot"
-            : "Finalize"
-    );
 }
 
-void Summary::on_finished() {
-    if (Application::global->mode == Application::Mode::Installer) {
-        system("reboot");
-    } else {
-        system("xfce4-session-logout --logout");
-    }
-}

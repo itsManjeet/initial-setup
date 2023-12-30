@@ -39,8 +39,10 @@ private:
     Disk *disk_page;
     Summary *summary_page;
 
-    Gtk::ProgressBar *progress_bar;
+    Gtk::Spinner *progress_spinner;
     Gtk::TextView *progress_view;
+    Glib::RefPtr<Gtk::TextBuffer> progress_buffer;
+    Gtk::Label *progress_message;
     Confirm *confirm_page;
 
     Glib::Dispatcher dispatcher;

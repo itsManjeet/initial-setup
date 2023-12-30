@@ -25,9 +25,9 @@
 class Summary : public Page {
 private:
     Gtk::TextView *summary_view;
-    Gtk::Button *finish_button;
-
-    void on_finished();
+    Gtk::ScrolledWindow *summary_scroll;
+    Gtk::Image *status_icon;
+    Gtk::Label *status_label;
 
 public:
     Summary(Page::BaseObjectType *object, const Glib::RefPtr<Gtk::Builder> &builder);

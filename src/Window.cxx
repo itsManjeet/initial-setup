@@ -18,6 +18,7 @@
  */
 
 #include "Window.hxx"
+#include "Application.hxx"
 
 #include "config.hxx"
 #include <iostream>
@@ -47,11 +48,13 @@ Window::Window(Gtk::Assistant::BaseObjectType *object, const Glib::RefPtr<Gtk::B
     builder->get_widget_derived("user_page", user_page);
     builder->get_widget_derived("timezone_page", timezone_page);
     builder->get_widget_derived("summary_page", summary_page);
-    builder->get_widget("progress_bar", progress_bar);
+
+    builder->get_widget("progress_spinner", progress_spinner);
+    builder->get_widget("progress_message", progress_message);
     builder->get_widget("progress_view", progress_view);
 
-    auto buffer = progress_view->get_buffer();
-    buffer->create_mark("last_line", buffer->end(), /* left_gravity= */ true);
+    progress_buffer = progress_view->get_buffer();
+    progress_buffer->create_mark("last_line", progress_buffer->end(), true);
 
     dispatcher.connect(sigc::mem_fun(*this, &Window::on_notification_from_worker_thread));
 }
@@ -59,9 +62,10 @@ Window::Window(Gtk::Assistant::BaseObjectType *object, const Glib::RefPtr<Gtk::B
 void Window::on_apply() {
     this->commit();
     if (worker_thread_) {
-        progress_bar->set_text("can't start a worker thread, already started");
-        progress_bar->set_fraction(1.0);
+        progress_message->set_label("can't start a worker thread, already started");
+        progress_spinner->stop();
     } else {
+        progress_spinner->start();
         worker_thread_ = new std::thread([this]() {
             worker_.start(this);
         });
@@ -74,7 +78,12 @@ void Window::on_cancel() {
 }
 
 void Window::on_close() {
-    std::cout << "quiting" << std::endl;
+    if (Application::global->mode == Application::Mode::Installer) {
+        system("reboot");
+    } else {
+        system("xfce4-session-logout --logout");
+    }
+
     this->hide();
 }
 
@@ -99,16 +108,17 @@ void Window::on_notification_from_worker_thread() {
     double progress;
     Glib::ustring message;
     worker_.get_data(&progress, &message);
-    progress_bar->pulse();
 
-    if (message != progress_view->get_buffer()->get_text()) {
-        auto buffer = progress_view->get_buffer();
-        buffer->set_text(message);
-        auto iter = buffer->end();
+    if (auto idx = message.find_last_of("::"); idx != std::string::npos) {
+        progress_message->set_text(message.substr(idx+2, message.find('\n', idx + 2) - (idx + 2)));
+    }
+
+    if (message != progress_buffer->get_text()) {
+        progress_buffer->set_text(message);
+        auto iter = progress_buffer->end();
         iter.set_line_offset(0);
-        auto mark = buffer->get_mark("last_line");
-        buffer->move_mark(mark, iter);
-        progress_view->scroll_to(mark);
+        auto mark = progress_buffer->get_mark("last_line");
+        progress_buffer->move_mark(mark, iter);
     }
 }
 
