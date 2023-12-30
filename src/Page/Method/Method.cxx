@@ -128,9 +128,11 @@ void Method::reload_partitions() {
     updated_block_devices();
     
     for (auto const &block: block_devices["blockdevices"]) {
-        storage_device_combo->append(block["path"].get<std::string>());
-        if (!Application::global->is_efi) {
-            boot_disk_combo->append(block["path"].get<std::string>());
+        if (block["type"] == "disk") {
+            storage_device_combo->append(block["path"].get<std::string>());
+            if (!Application::global->is_efi) {
+                boot_disk_combo->append(block["path"].get<std::string>());
+            }
         }
     }
 
