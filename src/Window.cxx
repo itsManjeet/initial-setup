@@ -110,7 +110,11 @@ void Window::on_notification_from_worker_thread() {
     worker_.get_data(&progress, &message);
 
     if (auto idx = message.find_last_of("::"); idx != std::string::npos) {
-        progress_message->set_text(message.substr(idx+2, message.find('\n', idx + 2) - (idx + 2)));
+        auto m = message.substr(idx+2, message.find('\n', idx + 2) - (idx + 2));
+        if (m.length() > 25) {
+            m = m.substr(0, 23) + "...";
+        }
+        progress_message->set_text(m);
     }
 
     if (message != progress_buffer->get_text()) {
