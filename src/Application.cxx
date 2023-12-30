@@ -74,6 +74,7 @@ void Application::on_activate() {
                 break;
             case Mode::InitialSetup:
                 // Hide installer Page
+                window->get_nth_page(WELCOME_PAGE)->hide();
                 window->get_nth_page(METHOD_PAGE)->hide();
                 window->get_nth_page(DISK_PAGE)->hide();
                 break;
