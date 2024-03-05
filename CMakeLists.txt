@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(initial_setup
+project(initial-setup
     VERSION "0.0.1"
     DESCRIPTION "Initial Setup Tool"
     LANGUAGES C CXX)
@@ -19,8 +19,8 @@ configure_file(config.hxx.in ${GENERATED_SOURCES_DIR}/config.hxx)
 include_directories(${GENERATED_SOURCES_DIR})
 
 include(GLibUtils)
-find_package(GTKMM)
-
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(GTKMM gtkmm-3.0 IMPORTED_TARGET REQUIRED)
 
 add_subdirectory(src)
 add_subdirectory(data)

@@ -31,7 +31,7 @@ add_executable(${PROJECT_NAME}
         Page/Summary/Summary.cxx
         Page/Summary/Summary.hxx)
 target_link_libraries(${PROJECT_NAME}
-    GTKMM)
+    PkgConfig::GTKMM)
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${GENERATED_SOURCES_DIR})
 
@@ -39,3 +39,8 @@ compile_resources(
         ${GENERATED_DATA_DIR}/resources.c
         window.glade
 )
+
+include(GNUInstallDirs)
+
+install(TARGETS ${PROJECT_NAME}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})

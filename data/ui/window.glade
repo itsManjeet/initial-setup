@@ -9,6 +9,7 @@
     <property name="default-height">575</property>
     <property name="icon-name">start-here</property>
     <property name="skip-taskbar-hint">True</property>
+    <property name="use-header-bar">1</property>
     <property name="deletable">False</property>
     <child>
       <object class="GtkBox" id="welcome_page">
@@ -117,7 +118,7 @@
       </object>
       <packing>
         <property name="page-type">intro</property>
-        <property name="title" translatable="yes">Welcome</property>
+        <property name="title" translatable="yes"></property>
         <property name="sidebar-image">start-here</property>
         <property name="complete">True</property>
         <property name="has-padding">False</property>
@@ -545,7 +546,7 @@
         </child>
       </object>
       <packing>
-        <property name="title" translatable="yes">Method</property>
+        <property name="title" translatable="yes"></property>
         <property name="sidebar-image">start-here</property>
         <property name="has-padding">False</property>
       </packing>
@@ -677,7 +678,7 @@
         </child>
       </object>
       <packing>
-        <property name="title" translatable="yes">Partition</property>
+        <property name="title" translatable="yes"></property>
         <property name="has-padding">False</property>
       </packing>
     </child>
@@ -811,7 +812,7 @@
         </child>
       </object>
       <packing>
-        <property name="title" translatable="yes">User</property>
+        <property name="title" translatable="yes"></property>
         <property name="has-padding">False</property>
       </packing>
     </child>
@@ -923,7 +924,7 @@
         </child>
       </object>
       <packing>
-        <property name="title" translatable="yes">Location</property>
+        <property name="title" translatable="yes"></property>
         <property name="has-padding">False</property>
       </packing>
     </child>
@@ -990,7 +991,7 @@
       </object>
       <packing>
         <property name="page-type">confirm</property>
-        <property name="title" translatable="yes">Confirm</property>
+        <property name="title" translatable="yes"></property>
         <property name="has-padding">False</property>
       </packing>
     </child>
@@ -1075,7 +1076,7 @@
       </object>
       <packing>
         <property name="page-type">progress</property>
-        <property name="title" translatable="yes">Progress</property>
+        <property name="title" translatable="yes"></property>
         <property name="has-padding">False</property>
       </packing>
     </child>
@@ -1178,7 +1179,7 @@
       </object>
       <packing>
         <property name="page-type">summary</property>
-        <property name="title" translatable="yes">Summary</property>
+        <property name="title" translatable="yes"></property>
         <property name="has-padding">False</property>
       </packing>
     </child>
