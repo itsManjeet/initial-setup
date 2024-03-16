@@ -33,6 +33,7 @@ Timezone::Timezone(Page::BaseObjectType *object, const Glib::RefPtr<Gtk::Builder
 
     utc_check->signal_toggled().connect(sigc::mem_fun(*this, &Timezone::on_utc_selected));
     timezone_combo->signal_changed().connect(sigc::mem_fun(*this, &Timezone::set_timezone));
+    utc_check->set_active(true);
 }
 
 void Timezone::prepare(Gtk::Window *base) {
@@ -57,6 +58,8 @@ void Timezone::prepare(Gtk::Window *base) {
     }
     std::sort(timezones.begin(), timezones.end());
     for(auto const& t : timezones) timezone_combo->append(t);
+
+    Application::global->window->set_page_complete(*this, true);
 }
 
 void Timezone::on_utc_selected() {
@@ -70,5 +73,4 @@ void Timezone::set_timezone() {
     } else {
         Application::global->timezone = timezone_combo->get_active_text();
     }
-    Application::global->window->set_page_complete(*this, true);
 }
