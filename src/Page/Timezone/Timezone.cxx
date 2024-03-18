@@ -42,6 +42,7 @@ void Timezone::prepare(Gtk::Window *base) {
         utc_check->set_active(true);
         utc_check->set_sensitive(false);
         timezone_combo->set_sensitive(false);
+        Application::global->window->set_page_complete(*this, true);
         set_timezone();
         return;
     }
@@ -52,7 +53,6 @@ void Timezone::prepare(Gtk::Window *base) {
             std::stringstream ss(line);
             std::string Z, timezone;
             ss >> Z >> timezone;
-
             timezones.push_back(timezone);
         }
     }
