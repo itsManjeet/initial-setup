@@ -45,9 +45,9 @@ void Worker::start(Window *caller) {
             case Application::Mode::Installer: {                
                 if (Application::global->clean_install) {
                     cmd << " ISE_CLEAN_INSTALL=1";
-                    cmd << " ISE_DEVICE=" << Application::global->drive;
+                    cmd << " ISE_DEVICE='" << Application::global->drive << "'";
                 } else {
-                    cmd << " ISE_ROOT=" << Application::global->partition;
+                    cmd << " ISE_ROOT='" << Application::global->partition << "'";
                 }
                 if (Application::global->is_efi) {
                     cmd << " ISE_EFI=" << Application::global->efi_partition;
@@ -60,10 +60,10 @@ void Worker::start(Window *caller) {
             }
                 break;
             case Application::Mode::InitialSetup: {
-                cmd << " ISE_USERNAME=" << Application::global->username;
-                cmd << " ISE_PASSWORD=" << Application::global->password;
+                cmd << " ISE_USERNAME='" << Application::global->username << "'";
+                cmd << " ISE_PASSWORD='" << Application::global->password << "'";
                 cmd << " ISE_AUTOLOGIN=" << (Application::global->autologin ? "1" : "0");
-                cmd << " ISE_TIMEZONE=" << Application::global->timezone;
+                cmd << " ISE_TIMEZONE='" << Application::global->timezone << "'";
                 cmd << " ISE_UPDATE_ROOT_PASSWORD=" << (Application::global->update_root_password ? "1" : "0");
                 cmd << " /usr/lib/initial-setup/first-boot.sh";
 

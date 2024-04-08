@@ -668,7 +668,7 @@
             <property name="margin-top">46</property>
             <property name="margin-bottom">24</property>
             <property name="pixel-size">128</property>
-            <property name="icon-name">users</property>
+            <property name="icon-name">user</property>
           </object>
           <packing>
             <property name="expand">False</property>
