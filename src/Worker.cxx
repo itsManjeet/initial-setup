@@ -56,7 +56,8 @@ void Worker::start(Window *caller) {
                     cmd << " ISE_BOOT_DEVICE=" << Application::global->boot_drive;
                 }
 
-                cmd << " /usr/lib/initial-setup/installer.sh";
+                std::string rootfs = getenv("APPDIR") ? getenv("APPDIR") : "/";
+                cmd << " " << rootfs << "/usr/lib/initial-setup/installer.sh";
             }
                 break;
             case Application::Mode::InitialSetup: {
@@ -65,7 +66,8 @@ void Worker::start(Window *caller) {
                 cmd << " ISE_AUTOLOGIN=" << (Application::global->autologin ? "1" : "0");
                 cmd << " ISE_TIMEZONE='" << Application::global->timezone << "'";
                 cmd << " ISE_UPDATE_ROOT_PASSWORD=" << (Application::global->update_root_password ? "1" : "0");
-                cmd << " /usr/lib/initial-setup/first-boot.sh";
+                std::string rootfs = getenv("APPDIR") ? getenv("APPDIR") : "/";
+                cmd << " " << rootfs << "/usr/lib/initial-setup/first-boot.sh";
 
             }
                 break;
