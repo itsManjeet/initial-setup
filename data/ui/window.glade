@@ -4,10 +4,12 @@
   <requires lib="gtk+" version="3.24"/>
   <object class="GtkAssistant" id="window">
     <property name="can-focus">False</property>
+    <property name="resizable">False</property>
     <property name="default-width">856</property>
     <property name="default-height">575</property>
     <property name="icon-name">start-here</property>
     <property name="skip-taskbar-hint">True</property>
+    <property name="use-header-bar">1</property>
     <property name="deletable">False</property>
     <child>
       <object class="GtkBox" id="welcome_page">
