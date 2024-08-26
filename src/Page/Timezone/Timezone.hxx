@@ -1,16 +1,16 @@
-/* 
+/*
  * Copyright (c) 2023 rlxos.
  *
- * This program is free software: you can redistribute it and/or modify  
- * it under the terms of the GNU General Public License as published by  
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, version 3.
  *
- * This program is distributed in the hope that it will be useful, but 
- * WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU 
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License 
+ * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  * Created by
@@ -22,20 +22,33 @@
 
 #include "../Page.hxx"
 
+class TimezoneColumn : public Gtk::TreeModel::ColumnRecord {
+public:
+    TimezoneColumn() {
+        add(name);
+    }
+
+    Gtk::TreeModelColumn<Glib::ustring> name;
+};
+
 class Timezone : public Page {
 private:
-    Gtk::ComboBoxText *timezone_combo{nullptr};
-    Gtk::CheckButton *utc_check{nullptr};
+    Gtk::Entry* timezone_entry{nullptr};
+    Gtk::CheckButton* utc_check{nullptr};
+    Glib::RefPtr<Gtk::ListStore> timezone_model;
+    Glib::RefPtr<Gtk::TreeModelFilter> filter;
+    TimezoneColumn column;
 
 protected:
     void on_utc_selected();
 
-    void set_timezone();
-public:
-    Timezone(Page::BaseObjectType *object, const Glib::RefPtr<Gtk::Builder> &builder);
+    bool on_timezone_selected(const Gtk::TreeModel::const_iterator& iter) const;
 
-    void prepare(Gtk::Window *window);
+    bool compare_fun(const Glib::ustring& key, const Gtk::TreeModel::iterator& iter);
+public:
+    Timezone(Page::BaseObjectType* object, const Glib::RefPtr<Gtk::Builder>& builder);
+
+    void prepare(Gtk::Window* window);
 };
 
-
-#endif //INITIAL_SETUP_TIMEZONE_HXX
+#endif // INITIAL_SETUP_TIMEZONE_HXX

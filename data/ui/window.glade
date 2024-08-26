@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.38.2 -->
+<!-- Generated with glade 3.40.0 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
   <object class="GtkAssistant" id="window">
@@ -9,7 +9,6 @@
     <property name="default-height">575</property>
     <property name="icon-name">start-here</property>
     <property name="skip-taskbar-hint">True</property>
-    <property name="use-header-bar">1</property>
     <property name="deletable">False</property>
     <child>
       <object class="GtkBox" id="welcome_page">
@@ -849,10 +848,9 @@
               </packing>
             </child>
             <child>
-              <object class="GtkComboBoxText" id="timezone_combo">
+              <object class="GtkEntry" id="timezone_entry">
                 <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="popup-fixed-width">False</property>
+                <property name="can-focus">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
