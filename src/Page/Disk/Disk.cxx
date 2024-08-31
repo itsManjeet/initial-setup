@@ -92,7 +92,7 @@ void Disk::prepare(Gtk::Window *base) {
                         Application::global->efi_partition = child["path"].get<std::string>();
                     }
                 }
-                if (child["path"].find("zram") != std::string::npos || child["path"].find("/dev/fd") != std::string::npos) {
+                if (child["path"].get<std::string>().find("zram") != std::string::npos || child["path"].get<std::string>().find("/dev/fd") != std::string::npos) {
                     continue;
                 }
                 auto row = *(ref_disk_model->append());
