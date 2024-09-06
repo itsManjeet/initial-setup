@@ -8,6 +8,7 @@
     <property name="default-width">856</property>
     <property name="default-height">575</property>
     <property name="icon-name">start-here</property>
+    <property name="use-header-bar">1</property>
     <property name="skip-taskbar-hint">True</property>
     <property name="deletable">False</property>
     <child>
